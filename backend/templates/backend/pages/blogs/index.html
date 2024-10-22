@@ -1,0 +1,80 @@
+{% extends 'backend/layout.html' %}
+{% block head %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">Posts</h1>
+  <a href="{% url 'admin.blogs.create' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Create Post</a>
+</div>
+{% endblock head %}
+{% block content %}
+
+<style>
+  .table thead th {
+    vertical-align: bottom;
+    border-bottom: 1px solid #e3e6f0 !important;
+}
+</style>
+
+                      <div class="card w-100">
+                        <div class="card-body">
+                            
+                          <table id="post-table" class=" table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Image</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+
+
+                           
+                        </div>
+                      </div>
+{% endblock content %}
+
+
+{% block js %}
+<script>
+  $(document).ready(function() {
+     const csrftoken = $("input[name='csrfmiddlewaretoken']").val();
+
+
+           $('#post-table').DataTable({
+                               "processing": true,
+                               "serverSide": true,
+                               "ajax": {
+                                   "url": "{% url 'admin.blogs' %}",
+                                   "type": "POST",
+                                   "headers": {'X-CSRFToken': '{{ csrf_token }}'},
+                               },
+                               "columns": [
+                                   { "data": "title" },
+                                   { "data": "description" },
+                                   { 
+                                         "data": "image",
+                                         "render": function(data, type, row) {
+                                             return `<img src="/media/${data}" alt="" style="width: 100px; height: auto;">`;
+                                         }
+                                   },
+
+                                   { 
+                                       "data": null,  // Datanı birbaşa göndərmək yerinə render funksiyası ilə işləyirik
+                                        "orderable": false,  // Bu sütun üzərində sıralama deaktiv edilir
+                                        "render": function(data, type, row) {
+                                          return `
+                                            <a href="/admin/blogs/edit/${row.id}" class="btn btn-sm btn-warning">Edit</a>
+                                            <a href="/admin/blogs/delete/${row.id}" class="btn btn-sm btn-danger delete-post" data-id="${row.id}">Delete</a>
+                                          `;
+                                        }
+                                   },
+
+                               ]
+                           });
+         });
+</script>
+{% endblock js %}

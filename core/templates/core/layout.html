@@ -1,0 +1,15 @@
+{% include 'core/inc/head.html' %}
+
+<body class="mobile_nav_class jl-has-sidebar">
+    <div class="options_layout_wrapper jl_radius jl_none_box_styles jl_border_radiuss">
+        <div class="options_layout_container full_layout_enable_front">
+            <!-- Start header -->
+            {% include 'core/inc/header.html' %}
+             
+            {% block content %}
+            {% endblock content %}
+          
+            {% include 'core/inc/footer.html' %}
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+{% extends 'backend/layout.html' %}
+{% block content %}
+
+                      <div class="card w-100">
+                        <div class="card-body">
+                            
+                            <form action="" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{form.title.label}}
+                                    {{form.title}}
+                                </div>
+                                <input type="submit" class="btn btn-primary" value="Save">
+                            </form>
+                           
+                        </div>
+                      </div>
+{% endblock content %}
