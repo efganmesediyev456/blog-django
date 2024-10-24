@@ -31,24 +31,29 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'modeltranslation',
+    'django.contrib.admin',
     'backend',
     'core'
 ]
 
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 ROOT_URLCONF = 'blog.urls'
@@ -133,3 +138,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 LOGIN_URL = '/admin/login/'
+
+
+
+
+LANGUAGES = (
+    ("en","English"),
+    ("tr","Turkish"),
+    ("az","Azerbaijani"),
+    ("ru","Russian")
+)
+
+LOCALE_PATHS = [
+    BASE_DIR / "locale/"
+]
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = "az"
+MODELTRANSLATION_LANGUAGES = ("tr","en","az","ru")

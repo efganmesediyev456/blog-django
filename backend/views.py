@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
-from .forms import LoginForm, BlogForm, CategoryForm
+from .forms import LoginForm, BlogForm, CategoryForm, SliderForm
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import Post, Category
+from .models import Post, Category, Slider
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 
@@ -85,6 +85,19 @@ def blogs_create(request):
 
 
 @login_required
+def sliders_create(request):
+    if request.method == 'POST':
+        form = SliderForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('admin.sliders')
+    else:
+        form = SliderForm()
+    context = {'form':form}
+    return render(request, 'backend/pages/sliders/save.html', context)
+
+
+@login_required
 def blogs_edit(request, id):
     post = Post.objects.get(id=id)
     if request.method == 'POST':
@@ -99,10 +112,30 @@ def blogs_edit(request, id):
 
 
 @login_required
+def sliders_edit(request, id):
+    slider = Slider.objects.get(id=id)
+    if request.method == 'POST':
+        form = SliderForm(request.POST, request.FILES, instance = slider)
+        if form.is_valid():
+            form.save()
+            return redirect('admin.sliders.edit', form.instance.id)
+    else:
+        form = SliderForm(instance=slider)
+    context = {'form':form}
+    return render(request, 'backend/pages/sliders/edit.html',context)
+
+
+@login_required
 def blogs_delete(request, id):
     post = Post.objects.get(id=id)
     post.delete()    
     return redirect('admin.blogs')  
+
+@login_required
+def sliders_delete(request, id):
+    slider = Slider.objects.get(id=id)
+    slider.delete()    
+    return redirect('admin.sliders')  
 
 @login_required
 def categories(request):
@@ -156,3 +189,21 @@ def categories_delete(request, id):
     category.delete()    
     return redirect('admin.categories')  
 
+
+
+@login_required
+def sliders(request):
+    if request.method == 'POST':
+        search = request.POST.get('search[value]', '')  # POST metodu ile arama al
+        sliders = Slider.objects.filter(title__icontains=search)  # Arama koşuluna göre filtrele
+        paginator = Paginator(sliders, 10)  # Sayfa başına 10 kayıt
+        page_number = request.POST.get('start', 0)  # DataTables'den 'start' parametresini al
+        posts_page = paginator.get_page(page_number)  # İlgili sayfayı al
+        data = {
+            'draw': int(request.POST.get('draw', 0)),  # 'draw' parametresi
+            'recordsTotal': sliders.count(),  # Toplam kayıt sayısı
+            'recordsFiltered': sliders.count(),  # Filtrelenmiş kayıt sayısı
+            'data': list(posts_page.object_list.values('title', 'id'))  # Sayfalanmış verileri al
+        }
+        return JsonResponse(data)
+    return render(request, 'backend/pages/sliders/index.html')

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Category
+from .models import Post, Category, Slider
 from django.contrib.auth.models import User
 
 
@@ -11,7 +11,11 @@ class LoginForm(forms.Form):
 class BlogForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'description', 'subtitle', 'image', 'categories','author', 'date']
+        fields = [
+            'title_az','title_en', 'title_ru', 'title_tr',
+              'description_az','description_en','description_ru','description_tr',
+                'subtitle_az','subtitle_en','subtitle_ru','subtitle_tr',
+                  'image', 'categories','author', 'date', 'slug']
 
     categories = forms.ModelMultipleChoiceField(
         queryset=Category.objects.all(),
@@ -37,19 +41,33 @@ class BlogForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(BlogForm, self).__init__(*args, **kwargs)
-        self.fields['title'].widget.attrs.update({'class': 'form-control'})
-        self.fields['subtitle'].widget.attrs.update({'class': 'form-control'})
-        self.fields['description'].widget.attrs.update({'class': 'form-control'})
         self.fields['image'].widget.attrs.update({'class': 'form-control'})
+        
+        new_fields = [field for field in self.fields if field != 'categories']
+
+        for field_name in new_fields:
+            self.fields[field_name].widget.attrs.update({'class': 'form-control'})  
 
 
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ['title']
-
-   
-
+        fields = ['title_az', 'title_en', "title_ru","title_tr"] 
+        
+        
     def __init__(self, *args, **kwargs):
         super(CategoryForm, self).__init__(*args, **kwargs)
-        self.fields['title'].widget.attrs.update({'class': 'form-control'})
+        for field_name in self.fields:
+            self.fields[field_name].widget.attrs.update({'class': 'form-control'})
+
+
+
+class SliderForm(forms.ModelForm):
+    class Meta:
+        model = Slider
+        fields = ['title_az', 'title_en', "title_ru","title_tr","image","author","category"] 
+
+    def __init__(self, *args, **kwargs):
+        super(SliderForm, self).__init__(*args, **kwargs)
+        for field_name in self.fields:
+            self.fields[field_name].widget.attrs.update({'class': 'form-control'})    

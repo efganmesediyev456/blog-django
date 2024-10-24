@@ -4,5 +4,6 @@ from django.conf import settings
 from . import views
 
 urlpatterns = [
-    path('', views.index, name = 'core.index')
+    path('', views.index, name = 'core.index'),
+    path('blogs/<slug:slug>', views.post, name = 'core.post'),
 ]

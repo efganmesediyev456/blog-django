@@ -7,16 +7,56 @@
                             <form action="" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="form-group">
-                                    {{form.title.label}}
-                                    {{form.title}}
+                                    {{form.slug.label}}
+                                    {{form.slug}}
                                 </div>
                                 <div class="form-group">
-                                    {{form.subtitle.label}}
-                                    {{form.subtitle}}
+                                    {{form.title_az.label}}
+                                    {{form.title_az}}
                                 </div>
                                 <div class="form-group">
-                                    {{form.description.label}}
-                                    {{form.description}}
+                                    {{form.title_en.label}}
+                                    {{form.title_en}}
+                                </div>
+                                <div class="form-group">
+                                    {{form.title_ru.label}}
+                                    {{form.title_ru}}
+                                </div>
+                                <div class="form-group">
+                                    {{form.title_tr.label}}
+                                    {{form.title_tr}}
+                                </div>
+                                <div class="form-group">
+                                    {{form.subtitle_az.label}}
+                                    {{form.subtitle_az}}
+                                </div>
+                                <div class="form-group">
+                                    {{form.subtitle_en.label}}
+                                    {{form.subtitle_en}}
+                                </div>
+                                <div class="form-group">
+                                    {{form.subtitle_ru.label}}
+                                    {{form.subtitle_ru}}
+                                </div>
+                                <div class="form-group">
+                                    {{form.subtitle_tr.label}}
+                                    {{form.subtitle_tr}}
+                                </div>
+                                <div class="form-group">
+                                    {{form.description_az.label}}
+                                    {{form.description_az}}
+                                </div>
+                                <div class="form-group">
+                                    {{form.description_en.label}}
+                                    {{form.description_en}}
+                                </div>
+                                <div class="form-group">
+                                    {{form.description_ru.label}}
+                                    {{form.description_ru}}
+                                </div>
+                                <div class="form-group">
+                                    {{form.description_tr.label}}
+                                    {{form.description_tr}}
                                 </div>
                                 <div class="form-group">
                                     {{form.date.label}}
@@ -30,7 +70,6 @@
                                     {{form.categories.label}}
                                     {{form.categories}}
                                 </div>
-
                                 <div class="form-group">
                                     {{form.author.label}}
                                     {{form.author}}

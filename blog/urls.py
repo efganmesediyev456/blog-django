@@ -18,9 +18,16 @@ Including another URLconf
 from django.urls import path,include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 
-urlpatterns = [
+
+admin_patterns = [
     path('admin/', include('backend.urls')),
-    path('', include('core.urls')),
 ]
+
+urlpatterns = i18n_patterns(
+    path('', include('core.urls')),
+)
+
+urlpatterns += admin_patterns
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

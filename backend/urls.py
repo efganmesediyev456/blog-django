@@ -17,4 +17,11 @@ urlpatterns = [
     path('categories/create', views.categories_create, name="admin.categories.create"),
     path('categories/edit/<int:id>', views.categories_edit, name="admin.categories.edit"),
     path('categories/delete/<int:id>', views.categories_delete, name="admin.categories.delete"),
+
+    #sliders
+    path('sliders/', views.sliders, name="admin.sliders"),
+    path('sliders/create', views.sliders_create, name="admin.sliders.create"),
+    path('sliders/edit/<int:id>', views.sliders_edit, name="admin.sliders.edit"),
+    path('sliders/delete/<int:id>', views.sliders_delete, name="admin.sliders.delete"),
+
 ]
