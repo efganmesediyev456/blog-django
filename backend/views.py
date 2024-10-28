@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
-from .forms import LoginForm, BlogForm, CategoryForm, SliderForm
+from .forms import LoginForm, BlogForm, CategoryForm, SliderForm, MenuForm
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import Post, Category, Slider
+from .models import Post, Category, Slider, Menu
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 
@@ -183,6 +183,12 @@ def categories_edit(request, id):
     return render(request, 'backend/pages/categories/edit.html',context)
 
 
+
+
+
+
+
+
 @login_required
 def categories_delete(request, id):
     category = Category.objects.get(id=id)
@@ -207,3 +213,60 @@ def sliders(request):
         }
         return JsonResponse(data)
     return render(request, 'backend/pages/sliders/index.html')
+
+
+
+
+# menus
+@login_required
+def menus(request):
+    if request.method == 'POST':
+        search = request.POST.get('search[value]', '')  # POST metodu ile arama al
+        menus = Menu.objects.filter(title__icontains=search)  # Arama koşuluna göre filtrele
+        paginator = Paginator(menus, 10)  # Sayfa başına 10 kayıt
+        page_number = request.POST.get('start', 0)  # DataTables'den 'start' parametresini al
+        posts_page = paginator.get_page(page_number)  # İlgili sayfayı al
+        data = {
+            'draw': int(request.POST.get('draw', 0)),  # 'draw' parametresi
+            'recordsTotal': menus.count(),  # Toplam kayıt sayısı
+            'recordsFiltered': menus.count(),  # Filtrelenmiş kayıt sayısı
+            'data': list(posts_page.object_list.values('title', 'id'))  # Sayfalanmış verileri al
+        }
+        return JsonResponse(data)
+    return render(request, 'backend/pages/menus/index.html')
+
+
+
+
+@login_required
+def menus_create(request):
+    if request.method == 'POST':
+        form = MenuForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('admin.menus')
+    else:
+        form = MenuForm()
+    context = {'form':form}
+    return render(request, 'backend/pages/menus/save.html', context)
+
+
+@login_required
+def menus_edit(request, id):
+    menu = Menu.objects.get(id=id)
+    if request.method == 'POST':
+        form = MenuForm(request.POST, instance = menu)
+        if form.is_valid():
+            form.save()
+            return redirect('admin.menus.edit', form.instance.id)
+    else:
+        form = MenuForm(instance=menu)
+    context = {'form':form}
+    return render(request, 'backend/pages/menus/edit.html',context)
+
+
+@login_required
+def menus_delete(request, id):
+    menu = Menu.objects.get(id=id)
+    menu.delete()    
+    return redirect('admin.menus')  

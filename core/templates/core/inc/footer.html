@@ -7,7 +7,7 @@
                     <div id="disto_about_us_widget-3" class="widget jellywp_about_us_widget">
                         <div class="widget_jl_wrapper about_widget_content"> <span class="jl_none_space"></span>
                             <div class="widget-title">
-                                <h2>About us</h2>
+                                <h2>About us </h2>
                             </div>
                             <div class="jellywp_about_us_widget_wrapper">
                                 <p>Mauris mattis auctor cursus. Phasellus tellus tellus, imperdiet ut imperdiet eu, iaculis a sem imperdiet ut imperdiet.</p>
@@ -96,18 +96,11 @@
                             <h2>Categories</h2>
                         </div>
                         <ul>
-                            <li class="cat-item cat-item-2"><a href="#" title="Sample category description goes here">Active</a> <span>11</span>
+                            {% for category in categories %}
+                            <li class="cat-item cat-item-2"><a href="#" title="Sample category description goes here">{{category.title}}</a> <span>{{category.posts_count}}</span>
                             </li>
-                            <li class="cat-item cat-item-3"><a href="#" title="Sample category description goes here">Business</a> <span>10</span>
-                            </li>
-                            <li class="cat-item cat-item-4"><a href="#" title="Sample category description goes here">Crazy</a> <span>5</span>
-                            </li>
-                            <li class="cat-item cat-item-5"><a href="#" title="Sample category description goes here">Gaming</a> <span>10</span>
-                            </li>
-                            <li class="cat-item cat-item-6"><a href="#" title="Sample category description goes here">Health</a> <span>6</span>
-                            </li>
-                            <li class="cat-item cat-item-7"><a href="#" title="Sample category description goes here">Science</a> <span>4</span>
-                            </li>
+                            {% endfor %}
+                            
                         </ul>
                     </div>
                 </div>

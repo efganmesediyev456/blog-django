@@ -59,6 +59,23 @@
         </div>
     </li>
 
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsemenus"
+            aria-expanded="true" aria-controls="collapsemenus">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Menus</span>
+        </a>
+        <div id="collapsemenus" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Menus lists:</h6>
+                <a class="collapse-item" href="{% url 'admin.menus' %}">List</a>
+                <a class="collapse-item" href="{% url 'admin.menus.create' %}">Create</a>
+
+            </div>
+        </div>
+    </li>
+
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsesliders"
             aria-expanded="true" aria-controls="collapsesliders">

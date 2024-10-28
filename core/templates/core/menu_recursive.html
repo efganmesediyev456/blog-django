@@ -1,0 +1,15 @@
+{%for menu in menus%}
+
+   <li class="menu-item menu-item-has-children"> <a href="#">{{menu.title}}<span class="border-menu"></span></a>
+                                {% if menu.children.all %}
+
+                                <ul class="sub-menu">
+
+                                    {% include 'core/menu_recursive.html' with menus=menu.children.all %}
+
+                                  
+                                </ul>
+                                {% endif %}
+    </li>
+
+{%endfor%}

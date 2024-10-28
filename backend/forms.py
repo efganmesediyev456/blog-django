@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Category, Slider
+from .models import Post, Category, Slider, Menu
 from django.contrib.auth.models import User
 
 
@@ -70,4 +70,16 @@ class SliderForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SliderForm, self).__init__(*args, **kwargs)
         for field_name in self.fields:
-            self.fields[field_name].widget.attrs.update({'class': 'form-control'})    
+            self.fields[field_name].widget.attrs.update({'class': 'form-control'}) 
+
+
+
+class MenuForm(forms.ModelForm):
+    class Meta:
+        model = Menu
+        fields = ['title_az','title_en','title_ru','title_tr',"parent"]
+
+    def __init__(self, *args, **kwargs):
+        super(MenuForm, self).__init__(*args, **kwargs)
+        for field_name in self.fields:
+            self.fields[field_name].widget.attrs.update({'class': 'form-control'}) 

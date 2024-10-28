@@ -1,4 +1,4 @@
-from .models import Category, Post, Slider
+from .models import Category, Post, Slider, Menu
 from modeltranslation.translator import TranslationOptions, register
 
 @register(Category)
@@ -13,4 +13,9 @@ class PostTranslationOptions(TranslationOptions):
 
 @register(Slider)
 class SliderTranslationOptions(TranslationOptions):
+    fields = ('title',)
+
+
+@register(Menu)
+class MenuTranslationOptions(TranslationOptions):
     fields = ('title',)
