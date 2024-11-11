@@ -1,0 +1,21 @@
+<!-- templates/record_and_show.html -->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Sesli Arama ve Metne Dönüştürme</title>
+</head>
+<body>
+    <h1>Sesli Arama ve Metne Dönüştürme</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Ses Kaydını Yap</button>
+    </form>
+
+    {% if text %}
+        <h2>Metne Dönüştürülen Konuşma:</h2>
+        <p>{{ text }}</p>
+    {% endif %}
+</body>
+</html>

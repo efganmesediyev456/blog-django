@@ -5,8 +5,23 @@ from .forms import CommentForm
 from django.contrib import messages
 from .serializers import PostSerializer
 from rest_framework.generics import ListCreateAPIView
+from .utils import record_audio, convert_audio_to_text
 
 # Create your views here.
+
+
+
+
+def record_and_show(request):
+    text = None
+    if request.method == 'POST':
+        # Ses kaydını al
+        audio_data = record_audio(duration=5)  # 5 saniye kaydediyor
+
+        # Ses kaydını metne dönüştür
+        text = convert_audio_to_text(audio_data)
+        
+    return render(request, 'core/record_and_show.html', {'text': text})
 
 
 def chunked_posts(posts, chunk_size):
